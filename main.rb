@@ -34,15 +34,23 @@ while game_board.is_game_over? == false
 	else
 		puts "Invalid square entered."
 	end
-	game_board.check_if_game_over
+	if game_board.is_game_over?
+		puts "Player Wins!"
+		game_board.draw_game_board
+		break
+	end
 	game_board.draw_game_board
 	puts ""
 	puts "---------------------"
 	puts "Computer's move:"
 	game_board.computer_move
-	game_board.check_if_game_over
+	if game_board.is_game_over?
+		puts "Computer Wins!"
+		game_board.draw_game_board
+		break
+	end
 	game_board.draw_game_board
 	puts ""
 	puts "---------------------"
-	puts "Player move: "
+	puts "Player's move: "
 end
