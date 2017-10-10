@@ -30,53 +30,67 @@ class GameBoard
 	end
 
 	def is_game_over?
-		if check_rows
+		if is_game_over_in_rows?
 			true
-		elsif check_columns
+		elsif is_game_over_in_columns?
 			true
-		elsif check_diagonals
-			true
-		else
-			false
-		end
-	end
-
-	def check_rows
-		if are_all_row_values_equal? 0
-			true
-		elsif are_all_row_values_equal? 1
-			true
-		elsif are_all_row_values_equal? 2
+		elsif is_game_over_in_diagonals?
 			true
 		else
 			false
 		end
 	end
 
-	def are_all_row_values_equal?(row_index)
+	def is_game_over_in_rows?
+		if do_rows_contain_end_state? 0
+			true
+		elsif do_rows_contain_end_state? 1
+			true
+		elsif do_rows_contain_end_state? 2
+			true
+		else
+			false
+		end
+	end
+
+	def do_rows_contain_end_state?(row_index)
 		first_row_value = @row_array[row_index][0]
 		second_row_value = @row_array[row_index][1]
 		third_row_value = @row_array[row_index][2]
 		(first_row_value == second_row_value && second_row_value == third_row_value && !first_row_value.empty?)
 	end
 
-	def check_columns
-		if are_all_column_values_equal? 0
+	def is_game_over_in_columns?
+		if does_column_contain_end_state? 0
 			true
-		elsif are_all_column_values_equal? 1
+		elsif does_column_contain_end_state? 1
 			true
-		elsif are_all_column_values_equal? 2
+		elsif does_column_contain_end_state? 2
 			true
 		else
 			false
 		end
 	end
 
-	def check_diagonals
-		false
+	def is_game_over_in_diagonals?
+		does_first_diagonal_contain_end_state? || does_second_diagonal_contain_end_state?
 	end
 
-	def are_all_column_values_equal?(column_index)
+	def does_first_diagonal_contain_end_state?
+		first_row_value = @row_array[0][0]
+		second_row_value = @row_array[1][1]
+		third_row_value = @row_array[2][2]
+		(first_row_value == second_row_value && second_row_value == third_row_value && !first_row_value.empty?)
+	end
+
+	def does_second_diagonal_contain_end_state?
+		first_row_value = @row_array[0][2]
+		second_row_value = @row_array[1][1]
+		third_row_value = @row_array[2][0]
+		(first_row_value == second_row_value && second_row_value == third_row_value && !first_row_value.empty?)
+	end
+
+	def does_column_contain_end_state?(column_index)
 		first_col = @row_array[0][column_index]
 		second_col = @row_array[1][column_index]
 		third_col = @row_array[2][column_index]
@@ -94,18 +108,6 @@ class GameBoard
 			true
 		else
 			false
-		end
-	end
-
-	def computer_move()
-		sleep(3)
-		row_index = 0 + rand(2)
-		col_index = 0 + rand(2)
-		computer_added_square = add_new_square row_index, col_index, "player2"
-		while (computer_added_square == false)
-			row_index = 0 + rand(2)
-			col_index = 0 + rand(2)
-			computer_added_square = add_new_square row_index, col_index, "player2"
 		end
 	end
 end
