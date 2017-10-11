@@ -29,8 +29,8 @@ class GameBoard
 		end
 	end
 
-	def is_game_over?
-		if is_game_over_in_rows?
+	def is_game_over?(player = nil)
+		if is_game_over_in_rows?(player)
 			true
 		elsif is_game_over_in_columns?
 			true
@@ -41,23 +41,32 @@ class GameBoard
 		end
 	end
 
-	def is_game_over_in_rows?
-		if do_rows_contain_end_state? 0
+	def is_game_over_in_rows?(player = nil)
+		if do_rows_contain_end_state?(0, player)
 			true
-		elsif do_rows_contain_end_state? 1
+		elsif do_rows_contain_end_state?(1, player)
 			true
-		elsif do_rows_contain_end_state? 2
+		elsif do_rows_contain_end_state?(2, player)
 			true
 		else
 			false
 		end
 	end
 
-	def do_rows_contain_end_state?(row_index)
+	def do_rows_contain_end_state?(row_index, player = nil)
 		first_row_value = @row_array[row_index][0]
 		second_row_value = @row_array[row_index][1]
 		third_row_value = @row_array[row_index][2]
-		(first_row_value == second_row_value && second_row_value == third_row_value && !first_row_value.empty?)
+		do_values_match = (first_row_value == second_row_value && second_row_value == third_row_value && !first_row_value.empty?)
+		if player.nil?
+			do_values_match
+		else
+			if do_values_match
+				first_row_value == player
+			else
+				do_values_match
+			end
+		end
 	end
 
 	def is_game_over_in_columns?
@@ -98,10 +107,12 @@ class GameBoard
 	end
 
 	def add_new_square(first_index, second_index, player)
-		if player == "player1"
+		if player == "X"
 			player_char = "X"
-		else
+		elsif player == "O"
 			player_char = "O"
+		else 
+			# Raise Exception?
 		end
 		if @row_array[first_index][second_index].empty?
 			@row_array[first_index][second_index] = player_char

@@ -1,4 +1,4 @@
-require './gameboard'
+require './game_board'
 
 class GameEngine
 	def initialize(difficulty_level)
