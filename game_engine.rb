@@ -18,23 +18,23 @@ class GameEngine
 		while @game_board.is_game_over? == false
 			next_square = gets.chomp
 			if (next_square == "tl")
-				@game_board.add_new_square 0, 0, "player1"
+				@game_board.add_new_square 0, 0, "X"
 			elsif (next_square == "tc")
-				@game_board.add_new_square 0, 1, "player1"
+				@game_board.add_new_square 0, 1, "X"
 			elsif (next_square == "tr")
-				@game_board.add_new_square 0, 2, "player1"
+				@game_board.add_new_square 0, 2, "X"
 			elsif (next_square == "ml")
-				@game_board.add_new_square 1, 0, "player1"
+				@game_board.add_new_square 1, 0, "X"
 			elsif (next_square == "mc")
-				@game_board.add_new_square 1, 1, "player1"
+				@game_board.add_new_square 1, 1, "X"
 			elsif (next_square == "mr")
-				@game_board.add_new_square 1, 2, "player1"
+				@game_board.add_new_square 1, 2, "X"
 			elsif (next_square == "bl")	
-				@game_board.add_new_square 2, 0, "player1"
+				@game_board.add_new_square 2, 0, "X"
 			elsif (next_square == "bc")
-				@game_board.add_new_square 2, 1, "player1"
+				@game_board.add_new_square 2, 1, "X"
 			elsif (next_square == "br")
-				@game_board.add_new_square 2, 2, "player1"
+				@game_board.add_new_square 2, 2, "X"
 			else
 				puts "Invalid square entered."
 			end
@@ -42,14 +42,22 @@ class GameEngine
 				puts "Player Wins!"
 				@game_board.draw_game_board
 				break
+			elsif @game_board.is_game_a_draw?
+				puts "Draw!"
+				@game_board.draw_game_board
+				break
 			end
 			@game_board.draw_game_board
 			puts ""
 			puts "---------------------"
 			puts "Computer's move:"
-			@difficulty_level.make_move(@game_board)
+			@difficulty_level.make_move(@game_board, "O")
 			if @game_board.is_game_over?
 				puts "Computer Wins!"
+				@game_board.draw_game_board
+				break
+			elsif @game_board.is_game_a_draw?
+				puts "Draw!"
 				@game_board.draw_game_board
 				break
 			end

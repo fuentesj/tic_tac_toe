@@ -1,5 +1,5 @@
 class EasyMode
-	def make_move(game_board)
+	def make_move(game_board, player)
 		sleep(3)
 		row_index = 0 + rand(2)
 		col_index = 0 + rand(2)
